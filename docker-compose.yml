@@ -1,0 +1,64 @@
+version: '3.7'
+
+services:
+  eureka-sv:
+    container_name: eureka-sv
+    build: eureka-sv
+    image: eureka-sv
+    mem_limit: 512m
+    ports:
+      - "8761:8761"
+    networks:
+      - onlinestore-network
+
+  product-service:
+    container_name: products
+    build: products
+    image: products
+    mem_limit: 512m
+    ports:
+      - "8083:8083"
+    environment:
+      - DATABASE_URL=jdbc:mysql://mysql-db:3306/product_service
+      - DATABASE_USERNAME=root
+      - DATABASE_PASSWORD=admin
+    depends_on:
+      - mysql-db
+    networks:
+      - onlinestore-network
+
+  cart-service:
+    build: car
+    container_name: car
+    image: car
+    mem_limit: 512m
+    ports:
+      - "8082:8082"
+    networks:
+      - onlinestore-network
+
+  sales-service:
+    build: sales-electronicstore
+    container_name: sales-electronicstore
+    image: sales-electronicstore
+    mem_limit: 512m
+    ports:
+      - "8085:8085"
+    environment:
+      - DATABASE_URL=jdbc:mysql://mysql-db:3306/sales_service
+      - DATABASE_USERNAME=root
+      - DATABASE_PASSWORD=admin
+    depends_on:
+      - mysql-db
+
+  mysql-db:
+    container_name: mysql-db
+    image: mysql:8.0
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+   
+networks:
+  onlinestore-network:
+    driver: bridge
