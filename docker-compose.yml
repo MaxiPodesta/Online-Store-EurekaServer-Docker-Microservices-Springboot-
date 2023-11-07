@@ -50,6 +50,8 @@ services:
       - DATABASE_PASSWORD=admin
     depends_on:
       - mysql-db
+    networks:
+      - onlinestore-network
 
   mysql-db:
     container_name: mysql-db
