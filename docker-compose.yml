@@ -19,7 +19,7 @@ services:
     ports:
       - "8083:8083"
     environment:
-      - DATABASE_URL=jdbc:mysql://mysql-db:3306/product_service
+      - DATABASE_URL=jdbc:mysql://mysql-db:3307/product_service
       - DATABASE_USERNAME=root
       - DATABASE_PASSWORD=admin
     depends_on:
@@ -45,7 +45,7 @@ services:
     ports:
       - "8085:8085"
     environment:
-      - DATABASE_URL=jdbc:mysql://mysql-db:3306/sales_service
+      - DATABASE_URL=jdbc:mysql://mysql-db:3307/sales_service
       - DATABASE_USERNAME=root
       - DATABASE_PASSWORD=admin
     depends_on:
@@ -57,7 +57,7 @@ services:
     container_name: mysql-db
     image: mysql:8.0
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: admin
     networks:
